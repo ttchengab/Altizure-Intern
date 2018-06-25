@@ -1,0 +1,105 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title> Altizure 2.1 Add project </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  </head>
+  <body style="margin: 0px; padding: 0px;">
+    <div id="page-content"></div>
+    
+    <script type="text/javascript" src="https://beta.altizure.cn/sdk"></script>
+    
+    <script>
+      let options = {
+        altizureApi:{
+          key: '7MkQf8UggsPaadvrlKALspJWZejZAJOLHn3cnIy'
+        },
+        camera: {
+          poseTo: { alt:100000,
+            lat:22.538388886344876,
+            lng:113.94255600866971 },
+          flyTo: { alt:1020.0739295752213,
+            lat:22.538388886344876,
+            lng:113.94255600866971,
+            north:-27.271585092584015,
+            tilt:74.7023627906978 }
+        },
+        renderItems: {
+          earth: true,
+          earthUseTexture: true,
+          featureInView: false,
+          orbitRing: true
+        },
+        eventHandlers: {
+          onContentInitialized: () => {console.log('earth ready')}
+        }
+      }
+      let sandbox = new altizure.Sandbox('page-content', options)
+      // add project: https://www.altizure.com/project/58428f1d97b73e0b090675cd/model
+      // at the default GPS position
+      // Note: your developer key must have access to the project, and the project must have valid GPS information.
+      sandbox.add('AltizureProjectMarker', {pid: '5849104597b73e0b090c01e8'})
+        .then((marker) => {
+          // marker created
+          console.log('created')
+          return marker.initialized
+        })
+        .then((marker) => {
+          // marker loaded
+          console.log('loaded')
+        })
+      // with an arbitrary position (longitude, latitude, altitude)
+      sandbox.add('AltizureProjectMarker', {
+        pid: '5849104597b73e0b090c01e8',
+        pose: {
+          position: {lng: 113.94420875334851, lat: 22.53672047469201, alt: 0}
+        }
+      })
+      .then((marker) => {
+          // marker created
+          console.log('created1')
+          return marker.initialized
+        })
+        .then((marker) => {
+          // marker loaded
+          console.log('loaded1')
+         // fetch('http://localhost:3000/Signup')
+
+
+          function createCORSRequest(method, url) {
+          var xhr = new XMLHttpRequest();
+          if ("withCredentials" in xhr) {
+
+            // Check if the XMLHttpRequest object has a "withCredentials" property.
+            // "withCredentials" only exists on XMLHTTPRequest2 objects.
+            xhr.open(method, url, true);
+
+          } else if (typeof XDomainRequest != "undefined") {
+
+            // Otherwise, check if XDomainRequest.
+            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+            xhr = new XDomainRequest();
+            xhr.open(method, url);
+
+          } else {
+
+            // Otherwise, CORS is not supported by the browser.
+            xhr = null;
+
+          }
+          return xhr;
+        }
+
+        var xhr = createCORSRequest('GET', 'http://localhost:3000/Signup');
+        if (!xhr) {
+          throw new Error('CORS not supported');
+        }
+                })
+
+                
+     
+    </script>
+    
+   
+  </body>
+</html>
