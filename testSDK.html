@@ -67,23 +67,23 @@
 
 
           function createCORSRequest(method, url) {
-          console.log("bug1");
+          //console.log("bug1");
           var xhr = new XMLHttpRequest();
           if ("withCredentials" in xhr) {
-            console.log("bug2");
+            //console.log("bug2");
             // Check if the XMLHttpRequest object has a "withCredentials" property.
             // "withCredentials" only exists on XMLHTTPRequest2 objects.
             xhr.open(method, url, true);
 
           } else if (typeof XDomainRequest != "undefined") {
-            console.log("bug3");
+            //console.log("bug3");
             // Otherwise, check if XDomainRequest.
             // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
             xhr = new XDomainRequest();
             xhr.open(method, url);
 
           } else {
-            console.log("bug4");
+            //console.log("bug4");
             // Otherwise, CORS is not supported by the browser.
             xhr = null;
 
