@@ -18,14 +18,14 @@ function sc(){
         flag = 1;
         
        
-        console.log("hi");
+        console.log("Got Request!");
     
       }
       else
       {
     
     
-        res.end ("<h1>hello Node.js</h1>");
+        //res.end ("<h1>hello Node.js</h1>");
         
        // console.log(action);
         //console.log(req.method);
@@ -44,13 +44,14 @@ function sc(){
     await page.setViewport({width: 5960, height: 4209})
     await page.goto('file:///C:/Users/TimCheng/Desktop/Everest%20Intern/Puppeteer/testSDK.html', );
     
-    await timeout(20000);
+    await timeout(10000);
     
     if(flag == 1)
     {
+     
       await page.screenshot({path: 'example.png'});
     }
-    
+    await timeout(1000);
     await browser.close();
     
   })();
