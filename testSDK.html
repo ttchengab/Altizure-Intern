@@ -6,9 +6,7 @@
   </head>
   <body style="margin: 0px; padding: 0px;">
     <div id="page-content"></div>
-    
     <script type="text/javascript" src="https://beta.altizure.cn/sdk"></script>
-    
     <script>
       let options = {
         altizureApi:{
@@ -35,9 +33,6 @@
         }
       }
       let sandbox = new altizure.Sandbox('page-content', options)
-      // add project: https://www.altizure.com/project/58428f1d97b73e0b090675cd/model
-      // at the default GPS position
-      // Note: your developer key must have access to the project, and the project must have valid GPS information.
       sandbox.add('AltizureProjectMarker', {pid: '5849104597b73e0b090c01e8'})
         .then((marker) => {
           // marker created
@@ -63,66 +58,46 @@
         .then((marker) => {
           // marker loaded
           console.log('loaded1')
-         // fetch('http://localhost:3000/Signup')
-
-
           function createCORSRequest(method, url) {
-          //console.log("bug1");
-          var xhr = new XMLHttpRequest();
-          if ("withCredentials" in xhr) {
-            //console.log("bug2");
-            // Check if the XMLHttpRequest object has a "withCredentials" property.
-            // "withCredentials" only exists on XMLHTTPRequest2 objects.
-            xhr.open(method, url, true);
-
-          } else if (typeof XDomainRequest != "undefined") {
-            //console.log("bug3");
-            // Otherwise, check if XDomainRequest.
-            // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-            xhr = new XDomainRequest();
-            xhr.open(method, url);
-
-          } else {
-            //console.log("bug4");
-            // Otherwise, CORS is not supported by the browser.
-            xhr = null;
-
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr) {
+              // Check if the XMLHttpRequest object has a "withCredentials" property.
+              // "withCredentials" only exists on XMLHTTPRequest2 objects.
+              xhr.open(method, url, true);
+            } else if (typeof XDomainRequest != "undefined") {
+              // Otherwise, check if XDomainRequest.
+              // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+              xhr = new XDomainRequest();
+              xhr.open(method, url);
+            } else {
+              // Otherwise, CORS is not supported by the browser.
+              xhr = null;
+            }
+            return xhr;
           }
-          return xhr;
-        }
-
-
-
-        function makeCorsRequest(method, url) {
-  // This is a sample server that supports CORS.
-          console.log("create");
-          var xhr = createCORSRequest(method, url);
+          function makeCorsRequest(method, url) {
+            console.log("create");
+            var xhr = createCORSRequest(method, url);
+            if (!xhr) {
+              alert('CORS not supported');
+              return;
+            }
+            xhr.onload = function() {
+              var text = xhr.responseText;
+              var title = getTitle(text);
+              alert('Response from CORS request to ' + url + ': ' + title);
+            };
+            xhr.onerror = function() {
+              alert('Error making request');
+            };
+            xhr.send();
+          }
+          var xhr = makeCorsRequest('POST', 'http://localhost:3000/Signup/');
           if (!xhr) {
-            alert('CORS not supported');
-            return;
+            throw new Error('CORS not supported');
           }
-
-          // Response handlers.
-          xhr.onload = function() {
-            var text = xhr.responseText;
-            var title = getTitle(text);
-            alert('Response from CORS request to ' + url + ': ' + title);
-          };
-
-          xhr.onerror = function() {
-            alert('Woops, there was an error making the request.');
-          };
-
-          xhr.send();
-        }
-
-        var xhr = makeCorsRequest('POST', 'http://localhost:3000/Signup/');
-        console.log("hi");
-        
-        if (!xhr) {
-          throw new Error('CORS not supported');
-        }
-                })
+                
+        })
                 
 
                 
