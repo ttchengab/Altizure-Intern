@@ -1,0 +1,16 @@
+{
+  "name": "dockerserver",
+  "version": "1.0.0",
+  "description": "Attempt to put node js server onto docker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Tim Cheng",
+  "license": "ISC",
+  "dependencies": {
+    "http": "^0.0.0",
+    "url": "^0.11.0",
+    "puppeteer": "^1.5.0"
+  }
+}
